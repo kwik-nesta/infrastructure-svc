@@ -16,7 +16,7 @@
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.*" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.19" />
 	  <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
-	  <PackageReference Include="DiagnosKit.Core" Version="2.2.8" />
+	  <PackageReference Include="DiagnosKit.Core" Version="2.2.9" />
   </ItemGroup>
 
   <ItemGroup>

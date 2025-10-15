@@ -1,12 +1,12 @@
 ﻿using CrossQueue.Hub.Models;
 using CrossQueue.Hub.Shared.Extensions;
+using DiagnosKit.Core.Configurations;
 using DiagnosKit.Core.Extensions;
 using DRY.MailJetClient.Library.Extensions;
 using Hangfire;
 using Hangfire.Console;
 using Hangfire.PostgreSql;
-using KwikNesta.Contracts.Models;
-using KwikNesta.Infrastruture.Svc.API.Settings;
+using KwikNesta.Contracts.Settings;
 using KwikNesta.Infrastruture.Svc.Application.Interfaces;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Persistence;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Repositories;
@@ -61,6 +61,22 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                 .AddDiagnosKitObservability(serviceName: serviceName, serviceVersion: "1.0.0")
                 .ConfigureMailJet(configuration)
                 .AddLoggerManager();
+        }
+
+        public static void ConfigureESSink(this IHostBuilder host, 
+                                           IConfiguration configuration)
+        {
+            host.ConfigureSerilogESSink(opt =>
+            {
+                var settings = configuration.GetSection("ElasticSearch")
+                    .Get<ElasticSettings>() ?? throw new ArgumentNullException("ElasticSearch");
+
+                opt.Url = settings.Url;
+                opt.Username = settings.UserName;
+                opt.Password = settings.Password;
+                opt.IndexPrefix = settings.IndexPrefix;
+                opt.IndexFormat = settings.IndexFormat;
+            });
         }
 
         private static IServiceCollection ConfigureCors(this IServiceCollection services,
@@ -240,7 +256,7 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                                                        IConfiguration configuration)
         {
             var jwtSettings = configuration.GetSection("Jwt")
-                .Get<JwtSetting>() ?? throw new ArgumentNullException("JWT Config can not be null");
+                .Get<JwtSettings>() ?? throw new ArgumentNullException("JWT Config can not be null");
 
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
