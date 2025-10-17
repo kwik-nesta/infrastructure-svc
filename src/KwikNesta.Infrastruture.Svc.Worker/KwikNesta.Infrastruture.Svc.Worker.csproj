@@ -10,4 +10,7 @@
 		<PackageReference Include="Hangfire.PostgreSql" Version="1.20.12" />
 		<PackageReference Include="Hangfire.Console" Version="1.4.3" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\KwikNesta.Infrastruture.Svc.Application\KwikNesta.Infrastruture.Svc.Application.csproj" />
+	</ItemGroup>
 </Project>

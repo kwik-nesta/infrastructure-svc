@@ -26,6 +26,15 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
 
             app.RunMigrations(true);
             app.MapControllers();
+            app.MapGet("/", () =>
+            {
+                return Results.Ok(new
+                {
+                    Successful = true,
+                    Status = 200,
+                    Message = "Kwik Nesta Infrastructure service is running..."
+                });
+            });
         }
 
         private static WebApplication UseHangfireDashboard(this WebApplication app, IConfiguration configuration)

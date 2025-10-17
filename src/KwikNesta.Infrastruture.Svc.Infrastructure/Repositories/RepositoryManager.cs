@@ -1,4 +1,4 @@
-﻿using KwikNesta.Infrastruture.Svc.Application.Interfaces;
+﻿using KwikNesta.Infrastruture.Svc.Application.Common.Interfaces;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Persistence;
 
 namespace KwikNesta.Infrastruture.Svc.Infrastructure.Repositories

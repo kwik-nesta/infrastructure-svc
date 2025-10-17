@@ -1,5 +1,5 @@
 ﻿using EFCore.CrudKit.Library.Data;
-using KwikNesta.Infrastruture.Svc.Application.Interfaces;
+using KwikNesta.Infrastruture.Svc.Application.Common.Interfaces;
 using KwikNesta.Infrastruture.Svc.Domain.Entities;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Persistence;
 using System.Linq.Expressions;

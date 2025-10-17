@@ -7,10 +7,14 @@ using Hangfire;
 using Hangfire.Console;
 using Hangfire.PostgreSql;
 using KwikNesta.Contracts.Settings;
-using KwikNesta.Infrastruture.Svc.Application.Interfaces;
+using KwikNesta.Infrastruture.Svc.Application.Common.Interfaces;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Persistence;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Repositories;
 using KwikNesta.Infrastruture.Svc.Worker;
+using KwikNesta.Mediatrix.Core.Abstractions;
+using KwikNesta.Mediatrix.Core.Extensions;
+using KwikNesta.Mediatrix.Core.Implementations.Pipelines;
+using KwikNesta.Mediatrix.Hangfire.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -35,6 +39,7 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                 .ConfigureSwagger()
                 .ConfigureApiVersion()
                 .ConfigureJwt(configuration)
+                .ConfigureKwikMediator()
                 .ConfigureHangfire(configuration)
                 .RegisterDbContext(configuration)
                 .ConfigureRefit(configuration)
@@ -77,6 +82,16 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                 opt.IndexPrefix = settings.IndexPrefix;
                 opt.IndexFormat = settings.IndexFormat;
             });
+        }
+
+        private static IServiceCollection ConfigureKwikMediator(this IServiceCollection services)
+        {
+            services
+                .AddKwikMediators(typeof(Program).Assembly)
+                .AddTransient(typeof(IKwikPipelineBehavior<,>), typeof(LoggingBehavior<,>))
+                .AddTransient(typeof(IKwikNotificationBehavior<>), typeof(NotificationLoggingBehavior<>))
+                .AddKwikBackgroundMediators();
+            return services;
         }
 
         private static IServiceCollection ConfigureCors(this IServiceCollection services,
@@ -165,13 +180,16 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                 ContentSerializer = new SystemTextJsonContentSerializer(options)
             };
 
-            var identity = configuration.GetSection("ServiceUrls")
-                .Get<ServiceUrls>()?.IdentityService ??
+            var servers = configuration.GetSection("ServiceUrls")
+                .Get<ServiceUrls>() ??
                 throw new ArgumentNullException("ServiceUrls");
 
             services.AddRefitClient<IIdentityServiceClient>(refitSettings)
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(identity))
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(servers.IdentityService))
                 .AddHttpMessageHandler<ForwardAuthHeaderHandler>();
+
+            services.AddRefitClient<ILocationClientService>(refitSettings)
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(servers.ExternalLocationClient));
 
             return services;
         }
@@ -192,9 +210,9 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
 
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Kwik Nesta API",
+                    Title = "Kwik Nesta Infrastructure Svc",
                     Version = "v1",
-                    Description = "Kwik Nesta Infrastructure API v1.0",
+                    Description = "Kwik Nesta Infrastructure Service API v1.0",
                     Contact = new OpenApiContact
                     {
                         Name = "Kwik Nesta Inc.",
@@ -204,9 +222,9 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                 });
                 c.SwaggerDoc("v2", new OpenApiInfo
                 {
-                    Title = "Kwik Nesta API",
+                    Title = "Kwik Nesta Infrastructure Svc",
                     Version = "v2",
-                    Description = "Kwik Nesta Infrastructure API v2.0",
+                    Description = "Kwik Nesta Infrastructure Service API v2.0",
                     Contact = new OpenApiContact
                     {
                         Name = "Kwik Nesta Inc.",

@@ -1,7 +1,7 @@
 ﻿using KwikNesta.Infrastruture.Svc.Domain.Entities;
 using System.Linq.Expressions;
 
-namespace KwikNesta.Infrastruture.Svc.Application.Interfaces
+namespace KwikNesta.Infrastruture.Svc.Application.Common.Interfaces
 {
     public interface IStateRepository
     {

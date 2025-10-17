@@ -1,8 +1,8 @@
-﻿namespace KwikNesta.Infrastruture.Svc.Application.Interfaces
+﻿namespace KwikNesta.Infrastruture.Svc.Application.Common.Interfaces
 {
     public interface IRepositoryManager
     {
-        ICityRepository City {  get; }
+        ICityRepository City { get; }
         IStateRepository State { get; }
         ICountryRepository Country { get; }
         IAuditTrailRepository AuditTrail { get; }

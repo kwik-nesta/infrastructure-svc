@@ -1,7 +1,6 @@
-﻿
-using KwikNesta.Infrastruture.Svc.Domain.Entities;
+﻿using KwikNesta.Infrastruture.Svc.Domain.Entities;
 
-namespace KwikNesta.Infrastruture.Svc.Application.Interfaces
+namespace KwikNesta.Infrastruture.Svc.Application.Common.Interfaces
 {
     public interface IAuditTrailRepository
     {
