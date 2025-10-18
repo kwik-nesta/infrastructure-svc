@@ -32,7 +32,7 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                 {
                     Successful = true,
                     Status = 200,
-                    Message = "Kwik Nesta Infrastructure service is running..."
+                    Message = $"Kwik Nesta Infrastructure service running in {app.Environment.EnvironmentName} mode..."
                 });
             });
         }
