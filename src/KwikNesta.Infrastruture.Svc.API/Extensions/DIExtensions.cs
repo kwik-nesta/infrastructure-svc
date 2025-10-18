@@ -7,6 +7,7 @@ using Hangfire;
 using Hangfire.Console;
 using Hangfire.PostgreSql;
 using KwikNesta.Contracts.Settings;
+using KwikNesta.Infrastruture.Svc.Application;
 using KwikNesta.Infrastruture.Svc.Application.Common.Interfaces;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Persistence;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Repositories;
@@ -87,7 +88,7 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
         private static IServiceCollection ConfigureKwikMediator(this IServiceCollection services)
         {
             services
-                .AddKwikMediators(typeof(Program).Assembly)
+                .AddKwikMediators(typeof(ApplicationAssemblyMarker).Assembly)
                 .AddTransient(typeof(IKwikPipelineBehavior<,>), typeof(LoggingBehavior<,>))
                 .AddTransient(typeof(IKwikNotificationBehavior<>), typeof(NotificationLoggingBehavior<>))
                 .AddKwikBackgroundMediators();
@@ -124,6 +125,10 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                     .UsePostgreSqlStorage(opt =>
                     {
                         opt.UseNpgsqlConnection(configuration.GetConnectionString("DefaultConnection"));
+                    }, new PostgreSqlStorageOptions
+                    {
+                        SchemaName = "infrastructure-hangfire",
+                        PrepareSchemaIfNecessary = true
                     })
                     .UseConsole()
                     .UseFilter(new AutomaticRetryAttribute()
