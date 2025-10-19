@@ -24,7 +24,7 @@ namespace KwikNesta.Infrastruture.Svc.Domain.Entities
         public string Emoji { get; set; } = string.Empty;
         public string EmojiUnicode { get; set; } = string.Empty;
 
-        public List<TimeZone> TimeZones { get; set; } = [];
+        public List<Timezone> TimeZones { get; set; } = [];
         public List<State> States { get; set; } = [];
     }
 }

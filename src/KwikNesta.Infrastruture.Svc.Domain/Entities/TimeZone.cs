@@ -2,7 +2,7 @@
 
 namespace KwikNesta.Infrastruture.Svc.Domain.Entities
 {
-    public class TimeZone : BaseEntity
+    public class Timezone : BaseEntity
     {
         public Guid CountryId { get; set; }
         public Country? Country { get; set; }

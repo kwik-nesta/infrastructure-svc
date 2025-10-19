@@ -2,7 +2,6 @@
 using KwikNesta.Contracts.Enums;
 using KwikNesta.Contracts.Models;
 using KwikNesta.Infrastruture.Svc.Domain.Entities;
-using TimeZone = KwikNesta.Infrastruture.Svc.Domain.Entities.TimeZone;
 
 namespace KwikNesta.Infrastruture.Svc.Application.Common
 {
@@ -122,9 +121,9 @@ namespace KwikNesta.Infrastruture.Svc.Application.Common
             };
         }
 
-        public static TimeZone Map(Guid countryId, TimeZoneDto tz)
+        public static Timezone Map(Guid countryId, TimeZoneDto tz)
         {
-            return new TimeZone
+            return new Timezone
             {
                 CountryId = countryId,
                 ZoneName = tz.ZoneName,

@@ -1,8 +1,5 @@
-﻿using CSharpTypes.Extensions.Enumeration;
-using DiagnosKit.Core.Logging.Contracts;
-using KwikNesta.Contracts.Models;
-using KwikNesta.Infrastruture.Svc.Application.Notification.Dataloads;
-using KwikNesta.Mediatrix.Hangfire.Abstractions;
+﻿using KwikNesta.Infrastruture.Svc.Application.Queries.AuditTrails;
+using KwikNesta.Mediatrix.Core.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KwikNesta.Infrastruture.Svc.API.Controllers.V1
@@ -12,21 +9,20 @@ namespace KwikNesta.Infrastruture.Svc.API.Controllers.V1
     [ApiController]
     public class AuditTrailsController : ControllerBase
     {
-        private readonly IKwikBackgroundMediator _mediator;
-        private readonly ILoggerManager _logger;
+        private readonly IKwikMediator _mediator;
 
-        public AuditTrailsController(IKwikBackgroundMediator mediator,
-                                    ILoggerManager logger)
+        public AuditTrailsController(IKwikMediator mediator)
         {
             _mediator = mediator;
-            _logger = logger;
         }
 
+        /// <summary>
+        /// Gets paged audit logs
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            await Task.CompletedTask;
-            return Ok();
-        }
+        public async Task<IActionResult> Get([FromQuery] GetAuditTrailsQuery query)
+            => Ok(await _mediator.SendAsync(query));
     }
 }

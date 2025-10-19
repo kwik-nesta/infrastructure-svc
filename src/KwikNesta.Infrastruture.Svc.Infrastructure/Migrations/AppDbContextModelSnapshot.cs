@@ -241,7 +241,7 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                     b.ToTable("States", "infrastructure-svc");
                 });
 
-            modelBuilder.Entity("KwikNesta.Infrastruture.Svc.Domain.Entities.TimeZone", b =>
+            modelBuilder.Entity("KwikNesta.Infrastruture.Svc.Domain.Entities.Timezone", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -313,7 +313,7 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("KwikNesta.Infrastruture.Svc.Domain.Entities.TimeZone", b =>
+            modelBuilder.Entity("KwikNesta.Infrastruture.Svc.Domain.Entities.Timezone", b =>
                 {
                     b.HasOne("KwikNesta.Infrastruture.Svc.Domain.Entities.Country", "Country")
                         .WithMany("TimeZones")
