@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_Migrations : Migration
+    public partial class Make_Longitude_And_Latitude_Nullable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,8 +56,8 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                     SubRegion = table.Column<string>(type: "text", nullable: false),
                     Native = table.Column<string>(type: "text", nullable: false),
                     Nationality = table.Column<string>(type: "text", nullable: false),
-                    Longitude = table.Column<string>(type: "text", nullable: false),
-                    Latitude = table.Column<string>(type: "text", nullable: false),
+                    Longitude = table.Column<string>(type: "text", nullable: true),
+                    Latitude = table.Column<string>(type: "text", nullable: true),
                     Emoji = table.Column<string>(type: "text", nullable: false),
                     EmojiUnicode = table.Column<string>(type: "text", nullable: false),
                     IsDeprecated = table.Column<bool>(type: "boolean", nullable: false),
@@ -78,8 +78,8 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     CountryCode = table.Column<string>(type: "text", nullable: false),
                     ISO2 = table.Column<string>(type: "text", nullable: false),
-                    Longitude = table.Column<string>(type: "text", nullable: false),
-                    Latitude = table.Column<string>(type: "text", nullable: false),
+                    Longitude = table.Column<string>(type: "text", nullable: true),
+                    Latitude = table.Column<string>(type: "text", nullable: true),
                     Type = table.Column<string>(type: "text", nullable: true),
                     CountryId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsDeprecated = table.Column<bool>(type: "boolean", nullable: false),
@@ -133,8 +133,8 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Longitude = table.Column<string>(type: "text", nullable: false),
-                    Latitude = table.Column<string>(type: "text", nullable: false),
+                    Longitude = table.Column<string>(type: "text", nullable: true),
+                    Latitude = table.Column<string>(type: "text", nullable: true),
                     CountryId = table.Column<Guid>(type: "uuid", nullable: false),
                     StateId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsDeprecated = table.Column<bool>(type: "boolean", nullable: false),

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251017235101_Initial_Migrations")]
-    partial class Initial_Migrations
+    [Migration("20251018235725_Make_Native_Nullable")]
+    partial class Make_Native_Nullable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("infrastructure-svc")
-                .HasAnnotation("ProductVersion", "8.0.19")
+                .HasAnnotation("ProductVersion", "8.0.21")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -88,11 +88,9 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Latitude")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Longitude")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -159,11 +157,9 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Latitude")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Longitude")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -175,7 +171,6 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Native")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("NumericCode")
@@ -230,11 +225,9 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Latitude")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Longitude")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -258,7 +251,6 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Abbreviation")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("CountryId")
@@ -271,7 +263,6 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("GMTOffsetName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDeprecated")

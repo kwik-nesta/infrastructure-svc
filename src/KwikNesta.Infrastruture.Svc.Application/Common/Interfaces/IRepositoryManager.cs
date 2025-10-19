@@ -6,5 +6,6 @@
         IStateRepository State { get; }
         ICountryRepository Country { get; }
         IAuditTrailRepository AuditTrail { get; }
+        Task<bool> SaveAsync();
     }
 }

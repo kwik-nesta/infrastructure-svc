@@ -1,5 +1,4 @@
-﻿using EFCore.CrudKit.Library.Data;
-using KwikNesta.Infrastruture.Svc.Application.Common.Interfaces;
+﻿using KwikNesta.Infrastruture.Svc.Application.Common.Interfaces;
 using KwikNesta.Infrastruture.Svc.Domain.Entities;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Persistence;
 using System.Linq.Expressions;
@@ -7,7 +6,7 @@ using System.Linq.Expressions;
 namespace KwikNesta.Infrastruture.Svc.Infrastructure.Repositories
 {
     public class StateRepository 
-        : EFCrudKitRepository<State, AppDbContext>,
+        : Repository<State>,
         IStateRepository
     {
         public StateRepository(AppDbContext dbContext)
@@ -26,6 +25,11 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Repositories
         public async Task<State?> FindAsync(Guid id)
         {
             return await base.FindByIdAsync(id);
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<State, bool>> expression)
+        {
+            return await base.ExistsAsync(expression);
         }
 
         public IQueryable<State> FindQuery(Expression<Func<State, bool>> predicate)

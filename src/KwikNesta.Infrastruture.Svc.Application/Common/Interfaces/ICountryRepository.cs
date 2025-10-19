@@ -7,6 +7,7 @@ namespace KwikNesta.Infrastruture.Svc.Application.Common.Interfaces
     {
         Task AddAsync(Country country, bool saveNow = true);
         Task AddRangeAsync(List<Country> country, bool saveNow = true);
+        Task<bool> AnyAsync(Expression<Func<Country, bool>> expression);
         Task<Country?> FindAsync(Guid id);
         IQueryable<Country> FindQuery(Expression<Func<Country, bool>> predicate);
     }

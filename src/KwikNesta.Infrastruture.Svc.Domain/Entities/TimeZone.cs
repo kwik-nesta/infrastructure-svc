@@ -1,9 +1,8 @@
-﻿using EFCore.CrudKit.Library.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KwikNesta.Infrastruture.Svc.Domain.Entities
 {
-    public class TimeZone : EntityBase
+    public class TimeZone : BaseEntity
     {
         public Guid CountryId { get; set; }
         public Country? Country { get; set; }
@@ -12,8 +11,8 @@ namespace KwikNesta.Infrastruture.Svc.Domain.Entities
         [Required]
         public long GMTOffset { get; set; }
 
-        public string GMTOffsetName { get; set; } = string.Empty;
-        public string Abbreviation { get; set; } = string.Empty;
+        public string? GMTOffsetName { get; set; } = string.Empty;
+        public string? Abbreviation { get; set; } = string.Empty;
         [Required]
         public string TZName { get; set; } = string.Empty;
     }

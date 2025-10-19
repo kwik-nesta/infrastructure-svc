@@ -1,17 +1,16 @@
-﻿using EFCore.CrudKit.Library.Models;
-using KwikNesta.Contracts.Enums;
+﻿using KwikNesta.Contracts.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace KwikNesta.Infrastruture.Svc.Domain.Entities
 {
-    public class AuditTrail : EntityBase
+    public class AuditTrail : BaseEntity
     {
         [Required]
-        public AuditDomain Domain { get; set; }
+        public AppAuditDomain Domain { get; set; }
         [Required]
         public Guid DomainId { get; set; }
         [Required]
-        public AuditAction Action { get; set; }
+        public AppAuditAction Action { get; set; }
         [Required]
         public string PerformedBy { get; set; } = string.Empty;
         [Required]

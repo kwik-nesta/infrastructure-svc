@@ -1,14 +1,13 @@
-﻿using EFCore.CrudKit.Library.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KwikNesta.Infrastruture.Svc.Domain.Entities
 {
-    public class City : EntityBase
+    public class City : BaseEntity
     {
         [Required]
         public string Name { get; set; } = string.Empty;
-        public string Longitude { get; set; } = string.Empty;
-        public string Latitude { get; set; } = string.Empty;
+        public string? Longitude { get; set; } = string.Empty;
+        public string? Latitude { get; set; } = string.Empty;
 
         public Guid CountryId { get; set; }
         public Country? Country { get; set; }

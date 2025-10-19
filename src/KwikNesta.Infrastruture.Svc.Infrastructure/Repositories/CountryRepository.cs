@@ -1,14 +1,11 @@
-﻿using EFCore.CrudKit.Library.Data;
-using KwikNesta.Infrastruture.Svc.Application.Common.Interfaces;
+﻿using KwikNesta.Infrastruture.Svc.Application.Common.Interfaces;
 using KwikNesta.Infrastruture.Svc.Domain.Entities;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Persistence;
 using System.Linq.Expressions;
 
 namespace KwikNesta.Infrastruture.Svc.Infrastructure.Repositories
 {
-    public class CountryRepository 
-        : EFCrudKitRepository<Country, AppDbContext>,
-        ICountryRepository
+    public class CountryRepository : Repository<Country>, ICountryRepository
     {
         public CountryRepository(AppDbContext dbContext)
             : base(dbContext) { }
@@ -26,6 +23,11 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Repositories
         public async Task<Country?> FindAsync(Guid id)
         {
             return await base.FindByIdAsync(id);
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<Country, bool>> expression)
+        {
+            return await base.ExistsAsync(expression);
         }
 
         public IQueryable<Country> FindQuery(Expression<Func<Country, bool>> predicate)

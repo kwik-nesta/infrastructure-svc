@@ -3,6 +3,7 @@ using System;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251018230759_Make_Longitude_And_Latitude_Nullable")]
+    partial class Make_Longitude_And_Latitude_Nullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,6 +171,7 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Native")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("NumericCode")
@@ -248,6 +252,7 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Abbreviation")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("CountryId")
@@ -260,6 +265,7 @@ namespace KwikNesta.Infrastruture.Svc.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("GMTOffsetName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDeprecated")

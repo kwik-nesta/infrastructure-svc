@@ -7,6 +7,7 @@ namespace KwikNesta.Infrastruture.Svc.Application.Common.Interfaces
     {
         Task AddAsync(State state, bool saveNow = true);
         Task AddRangeAsync(List<State> state, bool saveNow = true);
+        Task<bool> AnyAsync(Expression<Func<State, bool>> expression);
         Task<State?> FindAsync(Guid id);
         IQueryable<State> FindQuery(Expression<Func<State, bool>> predicate);
     }

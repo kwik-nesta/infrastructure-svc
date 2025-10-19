@@ -1,14 +1,11 @@
-﻿using EFCore.CrudKit.Library.Data;
-using KwikNesta.Infrastruture.Svc.Application.Common.Interfaces;
+﻿using KwikNesta.Infrastruture.Svc.Application.Common.Interfaces;
 using KwikNesta.Infrastruture.Svc.Domain.Entities;
 using KwikNesta.Infrastruture.Svc.Infrastructure.Persistence;
 using System.Linq.Expressions;
 
 namespace KwikNesta.Infrastruture.Svc.Infrastructure.Repositories
 {
-    public class AuditTrailRepository 
-        : EFCrudKitRepository<AuditTrail, AppDbContext>,
-        IAuditTrailRepository
+    public class AuditTrailRepository : Repository<AuditTrail>, IAuditTrailRepository
     {
         public AuditTrailRepository(AppDbContext dbContext) 
             : base(dbContext) { }

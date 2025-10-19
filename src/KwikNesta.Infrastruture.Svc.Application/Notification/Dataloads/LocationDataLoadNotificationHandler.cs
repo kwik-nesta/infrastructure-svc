@@ -43,16 +43,16 @@ namespace KwikNesta.Infrastruture.Svc.Application.Notification.Dataloads
             {
                 _logger.LogInfo("Running Location Dataload...");
                 var countriesResponseData = await _locationClient.GetCountriesAsyncV1();
-                if (countriesResponseData.IsSuccessStatusCode || countriesResponseData.Content == null)
+                if (!countriesResponseData.IsSuccessStatusCode || countriesResponseData.Content == null)
                 {
                     _logger.LogError(countriesResponseData.Error?.Message ?? "An error occurred while getting countries");
                     return;
                 }
 
-                foreach (var country in countriesResponseData.Content)
+                foreach (var country in countriesResponseData.Content.Data)
                 {
                     _logger.LogInfo("Running Dataload for country {0}.", country.Name);
-                    var countryExists = (await _repository.Country.FindAsync(country.Id)) != null;
+                    var countryExists = await _repository.Country.AnyAsync(c => c.Id == country.Id);
                     if (!countryExists)
                     {
                         //// Itereate over each state
@@ -68,7 +68,7 @@ namespace KwikNesta.Infrastruture.Svc.Application.Notification.Dataloads
                             foreach (var state in states)
                             {
                                 _logger.LogInfo($"Running data-load for the {country.Nationality} state, {state.Name}.");
-                                var stateExists = (await _repository.State.FindAsync(state.Id)) != null;
+                                var stateExists = await _repository.State.AnyAsync(s => s.Id == state.Id);
                                 if (!stateExists)
                                 {
                                     var stateToAdd = Helpers.Map(state);
@@ -97,7 +97,7 @@ namespace KwikNesta.Infrastruture.Svc.Application.Notification.Dataloads
                         }
                         else
                         {
-                            _logger.LogError(statesResponseData.Error?.Message ?? "Error occurred while getting cities for state");
+                            _logger.LogError(statesResponseData.Error?.Message ?? "Error occurred while getting states for country");
                         }
 
                         var countryToInsert = Helpers.Map(country);
@@ -107,7 +107,7 @@ namespace KwikNesta.Infrastruture.Svc.Application.Notification.Dataloads
                     }
                     else
                     {
-                        _logger.LogInfo("Country: {Name} already stateExists in the database", country.Name);
+                        _logger.LogInfo("{Name} already exists in the database", country.Name);
                     }
                 }
             }

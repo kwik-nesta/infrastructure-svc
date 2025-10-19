@@ -1,9 +1,8 @@
-﻿using EFCore.CrudKit.Library.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KwikNesta.Infrastruture.Svc.Domain.Entities
 {
-    public class Country : EntityBase
+    public class Country : BaseEntity
     {
         [Required]
         public string Name { get; set; } = string.Empty;
@@ -18,10 +17,10 @@ namespace KwikNesta.Infrastruture.Svc.Domain.Entities
         public string TLD { get; set; } = string.Empty;
         public string Region { get; set; } = string.Empty;
         public string SubRegion { get; set; } = string.Empty;
-        public string Native { get; set; } = string.Empty;
+        public string? Native { get; set; } = string.Empty;
         public string Nationality { get; set; } = string.Empty;
-        public string Longitude { get; set; } = string.Empty;
-        public string Latitude { get; set; } = string.Empty;
+        public string? Longitude { get; set; } = string.Empty;
+        public string? Latitude { get; set; } = string.Empty;
         public string Emoji { get; set; } = string.Empty;
         public string EmojiUnicode { get; set; } = string.Empty;
 

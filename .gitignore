@@ -3,3 +3,4 @@ obj/
 bin/
 appsettings.*.json
 *.user
+/src/KwikNesta.Infrastruture.Svc.API/KwikNesta.Infrastruture.Svc.API.csproj.user
