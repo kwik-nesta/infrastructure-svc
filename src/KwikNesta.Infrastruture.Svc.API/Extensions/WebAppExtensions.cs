@@ -21,6 +21,7 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseHangfireDashboard(configuration);
 

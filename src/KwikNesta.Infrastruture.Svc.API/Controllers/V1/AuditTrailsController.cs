@@ -1,5 +1,6 @@
 ﻿using KwikNesta.Infrastruture.Svc.Application.Queries.AuditTrails;
 using KwikNesta.Mediatrix.Core.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KwikNesta.Infrastruture.Svc.API.Controllers.V1
@@ -7,6 +8,7 @@ namespace KwikNesta.Infrastruture.Svc.API.Controllers.V1
     [Route("api/v{version:apiversion}/audit-trails")]
     [ApiVersion("1.0")]
     [ApiController]
+    [Authorize(Roles = "Admin, SuperAdmin")]
     public class AuditTrailsController : ControllerBase
     {
         private readonly IKwikMediator _mediator;

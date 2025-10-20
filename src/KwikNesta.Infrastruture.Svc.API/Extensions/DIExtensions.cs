@@ -190,11 +190,19 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                 throw new ArgumentNullException("ServiceUrls");
 
             services.AddRefitClient<IIdentityServiceClient>(refitSettings)
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(servers.IdentityService))
+                .ConfigureHttpClient(c =>
+                {
+                    c.BaseAddress = new Uri(servers.IdentityService);
+                    c.Timeout = TimeSpan.FromSeconds(60);
+                })
                 .AddHttpMessageHandler<ForwardAuthHeaderHandler>();
 
             services.AddRefitClient<ILocationClientService>(refitSettings)
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(servers.ExternalLocationClient));
+                .ConfigureHttpClient(c =>
+                { 
+                    c.BaseAddress = new Uri(servers.ExternalLocationClient);
+                    c.Timeout = TimeSpan.FromSeconds(60);
+                });
 
             return services;
         }
