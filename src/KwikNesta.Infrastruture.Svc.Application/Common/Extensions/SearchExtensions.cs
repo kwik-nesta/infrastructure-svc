@@ -1,5 +1,4 @@
-﻿using CSharpTypes.Extensions.Date;
-using CSharpTypes.Extensions.Enumeration;
+﻿using CSharpTypes.Extensions.Enumeration;
 using KwikNesta.Contracts.Enums;
 using KwikNesta.Infrastruture.Svc.Application.Models;
 using KwikNesta.Infrastruture.Svc.Application.Queries.AuditTrails;
@@ -41,7 +40,9 @@ namespace KwikNesta.Infrastruture.Svc.Application.Common.Extensions
             return query;
         }
 
-        public static IEnumerable<AuditTrailDto> QueryData(this IEnumerable<AuditTrail> audits, List<UserDto> users)
+        public static IEnumerable<AuditTrailDto> QueryData(this IEnumerable<AuditTrail> audits, 
+                                                           List<UserDto> users,
+                                                           string? search)
         {
             var query = from audit in audits
                         join performer in users on audit.PerformedBy equals performer.Id into performerGroup
@@ -58,7 +59,9 @@ namespace KwikNesta.Infrastruture.Svc.Application.Common.Extensions
                             Domain = audit.Domain.GetDescription()
                         };
 
-            return query;
+            return string.IsNullOrWhiteSpace(search) ? 
+                query : 
+                query.Where(au => au.PerformedBy.ToLower().Contains(search.ToLower()));
         }
     }
 }

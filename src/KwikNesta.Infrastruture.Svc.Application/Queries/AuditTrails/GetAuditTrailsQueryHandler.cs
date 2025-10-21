@@ -33,7 +33,7 @@ namespace KwikNesta.Infrastruture.Svc.Application.Queries.AuditTrails
             userIds.Union(audits.Select(au => au.TargetId).Distinct());
             var users = await GetUsers(userIds);
 
-            var data = audits.QueryData(users)
+            var data = audits.QueryData(users, request.Search)
                 .Paginate(request.Page, request.PageSize);
 
             return new ApiResult<Paginator<AuditTrailDto>>(data);
