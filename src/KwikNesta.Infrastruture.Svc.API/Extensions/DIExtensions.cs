@@ -6,6 +6,7 @@ using DRY.MailJetClient.Library.Extensions;
 using Hangfire;
 using Hangfire.Console;
 using Hangfire.PostgreSql;
+using KwikNesta.Contracts.Http;
 using KwikNesta.Contracts.Settings;
 using KwikNesta.Infrastruture.Svc.Application;
 using KwikNesta.Infrastruture.Svc.Application.Common.Interfaces;
@@ -169,7 +170,6 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                                                         IConfiguration configuration)
         {
             services.AddHttpContextAccessor();
-
             services.AddTransient<ForwardAuthHeaderHandler>();
 
             var options = new JsonSerializerOptions
@@ -195,6 +195,7 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                     c.BaseAddress = new Uri(servers.IdentityService);
                     c.Timeout = TimeSpan.FromSeconds(60);
                 })
+                .AddHttpMessageHandler(() => new ServiceRefitWakeUpHandler())
                 .AddHttpMessageHandler<ForwardAuthHeaderHandler>();
 
             services.AddRefitClient<ILocationClientService>(refitSettings)
@@ -202,7 +203,7 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                 { 
                     c.BaseAddress = new Uri(servers.ExternalLocationClient);
                     c.Timeout = TimeSpan.FromSeconds(120);
-                });
+                }).AddHttpMessageHandler(() => new ServiceRefitWakeUpHandler());
 
             return services;
         }
