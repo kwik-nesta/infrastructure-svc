@@ -44,7 +44,7 @@ namespace KwikNesta.Infrastruture.Svc.Application.Notification.Emails
             if (File.Exists(path))
             {
                 var template = File.ReadAllText(path);
-                if (!string.IsNullOrEmpty(template))
+                if (string.IsNullOrEmpty(template))
                 {
                     _logger.LogError("The template returned an empty string");
                     return;
