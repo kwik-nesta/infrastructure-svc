@@ -201,7 +201,7 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
                 .ConfigureHttpClient(c =>
                 { 
                     c.BaseAddress = new Uri(servers.ExternalLocationClient);
-                    c.Timeout = TimeSpan.FromSeconds(60);
+                    c.Timeout = TimeSpan.FromSeconds(120);
                 });
 
             return services;
