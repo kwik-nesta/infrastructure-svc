@@ -13,7 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer()
     .RegisterServices(builder.Configuration, builder.Environment.ApplicationName);
 
-builder.Host.ConfigureESSink(builder.Configuration);
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Host.ConfigureESSink(builder.Configuration);
+}
 
 var app = builder.Build();
 var logger = app.Services.GetRequiredService<ILoggerManager>();
