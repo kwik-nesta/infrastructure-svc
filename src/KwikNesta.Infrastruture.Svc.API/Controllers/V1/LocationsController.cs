@@ -26,6 +26,18 @@ namespace KwikNesta.Infrastruture.Svc.API.Controllers.V1
             => Ok(await _mediator.SendAsync(query));
 
         /// <summary>
+        /// Get country data by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("countries/{id}")]
+        public async Task<IActionResult> GetCountryById([FromRoute] Guid id)
+            => Ok(await _mediator.SendAsync(new GetCountryByIdQuery
+            {
+                Id = id
+            }));
+
+        /// <summary>
         /// Gets a list of states in a country
         /// </summary>
         /// <param name="countryId"></param>

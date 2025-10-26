@@ -15,6 +15,7 @@ namespace KwikNesta.Infrastruture.Svc.Application.Queries.Locations.Dtos
         public string? Longitude { get; set; } = string.Empty;
         public string? Latitude { get; set; } = string.Empty;
         public string Emoji { get; set; } = string.Empty;
+        public List<StateDto> States { get; set; } = [];
         public List<TimeZoneDto> TimeZones { get; set; } = [];
 
         public static CountryDto Map(Country country)
@@ -34,6 +35,9 @@ namespace KwikNesta.Infrastruture.Svc.Application.Queries.Locations.Dtos
                 Emoji = country.Emoji,
                 TimeZones = country.TimeZones
                     .Select(Map)
+                    .ToList(),
+                States = country.States
+                    .Select(StateDto.Map)
                     .ToList()
             };
         }
