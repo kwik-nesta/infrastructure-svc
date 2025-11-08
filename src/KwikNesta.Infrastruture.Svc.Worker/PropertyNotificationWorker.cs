@@ -2,21 +2,21 @@
 using CSharpTypes.Extensions.Enumeration;
 using DiagnosKit.Core.Logging.Contracts;
 using KwikNesta.Contracts.Enums;
-using KwikNesta.Infrastruture.Svc.Application.Notification.Audits;
-using KwikNesta.Infrastruture.Svc.Domain.Entities;
+using KwikNesta.Contracts.Models;
+using KwikNesta.Infrastruture.Svc.Application.Notification.Properties;
 using KwikNesta.Mediatrix.Core.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace KwikNesta.Infrastruture.Svc.Worker
 {
-    public class AuditTrailWorker : BackgroundService
+    public class PropertyNotificationWorker : BackgroundService
     {
         private readonly ILoggerManager _logger;
         private readonly IRabbitMQPubSub _pubSub;
         private readonly IServiceScopeFactory _scopeFactory;
 
-        public AuditTrailWorker(ILoggerManager logger,
+        public PropertyNotificationWorker(ILoggerManager logger,
                                   IRabbitMQPubSub pubSub,
                                   IServiceScopeFactory scopeFactory)
         {
@@ -24,19 +24,18 @@ namespace KwikNesta.Infrastruture.Svc.Worker
             _pubSub = pubSub;
             _scopeFactory = scopeFactory;
         }
-
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInfo("Audit Worker started....");
+            _logger.LogInfo("Property Notification Event Worker started....");
 
-            _pubSub.Subscribe<AuditTrail>(MQs.Audit.GetDescription(), async msg =>
+            _pubSub.Subscribe<PropertyNotificationEvent>(MQs.Property.GetDescription(), async msg =>
             {
                 using var scope = _scopeFactory.CreateScope();
                 var mediator = scope.ServiceProvider.GetRequiredService<IKwikMediator>();
 
-                _logger.LogInfo("Received audit for action: {Action}", msg.Action.GetDescription());
-                await mediator.PublishAsync(new AuditNotification(msg), stoppingToken);
-            }, routingKey: MQRoutingKey.AuditTrails.GetDescription());
+                _logger.LogInfo("Received property notification event for {0}", msg.UserId);
+                await mediator.PublishAsync(new PropertyEventNotification(msg), stoppingToken);
+            }, routingKey: MQRoutingKey.PropertyNotification.GetDescription());
 
             await Task.CompletedTask;
         }

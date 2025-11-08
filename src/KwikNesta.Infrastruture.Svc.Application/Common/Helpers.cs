@@ -23,6 +23,14 @@ namespace KwikNesta.Infrastruture.Svc.Application.Common
             };
         }
 
+        public static string GetFormattedTemplate(string template, PropertyNotificationEvent events)
+        {
+            return template
+                .Replace("{{FirstName}}", "")
+                .Replace("{{Message}}", "")
+                .Replace("{{Year}}", DateTime.UtcNow.Year.ToString());
+        }
+
         public static string GetFormattedTemplate(string template, NotificationMessage message)
         {
             var now = DateTime.UtcNow;

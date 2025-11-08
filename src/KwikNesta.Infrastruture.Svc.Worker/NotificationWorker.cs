@@ -35,7 +35,7 @@ namespace KwikNesta.Infrastruture.Svc.Worker
                 var mediator = scope.ServiceProvider.GetRequiredService<IKwikMediator>();
 
                 _logger.LogInfo("Received notification for {EmailAddress}", msg.EmailAddress);
-                await mediator.PublishAsync(new EmailNotification(msg));
+                await mediator.PublishAsync(new EmailNotification(msg), stoppingToken);
             }, routingKey: MQRoutingKey.AccountEmail.GetDescription());
 
             await Task.CompletedTask;

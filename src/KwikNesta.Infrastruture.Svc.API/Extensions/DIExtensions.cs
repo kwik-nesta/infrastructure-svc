@@ -161,7 +161,8 @@ namespace KwikNesta.Infrastruture.Svc.API.Extensions
         {
             services.AddHostedService<NotificationWorker>()
                .AddHostedService<AuditTrailWorker>()
-               .AddHostedService<DataloadWorker>();
+               .AddHostedService<DataloadWorker>()
+               .AddHostedService<PropertyNotificationWorker>();
 
             return services;
         }
