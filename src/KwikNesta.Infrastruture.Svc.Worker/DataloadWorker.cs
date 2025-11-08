@@ -37,7 +37,7 @@ namespace KwikNesta.Infrastruture.Svc.Worker
                 _logger.LogInfo("Received data-load request.\n\t\tType: {Type}. \n\t\tRequest By: {RequesterEmail}.\n\t\tDate: {Date}",
                     msg.Type.GetDescription(), msg.RequesterEmail, msg.Date);
                 
-                mediator.Publish(new DataLoadNotification(msg), stoppingToken);
+                mediator.Publish(new DataLoadNotification(msg));
                 await Task.CompletedTask;
             }, routingKey: MQRoutingKey.DataLoad.GetDescription());
 
